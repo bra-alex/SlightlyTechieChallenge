@@ -31,6 +31,12 @@ async function httpGetPost(req, res){
 
 async function httpCreatePost(req, res){
     const post = req.body
+
+    if (!post.title || !post.content || !post.author) {
+        return res.status(404).json({
+            message: 'Missing post parameter'
+        })
+    }
     await postModel.createPost(post)
 
     res.status(201).json({
@@ -48,6 +54,12 @@ async function httpUpdatePost(req, res){
     if(!exists){
         return res.status(404).json({
             message: 'Post does not exist'
+        })
+    }
+
+    if (!post.title || !post.content || !post.author) {
+        return res.status(404).json({
+            message: 'Missing post parameter'
         })
     }
 
