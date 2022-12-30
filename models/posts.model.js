@@ -1,6 +1,6 @@
 const Post = require('../models/posts.mongo')
 
-async function getPosts() {
+async function getPosts(next) {
     try {
         return await Post.find({},
             {
@@ -9,13 +9,12 @@ async function getPosts() {
             })
     } catch (e) {
         console.log(e)
-        res.status(500).json({
-            message: 'Error fetching posts from the database'
-        })
+        e.message = 'Error fetching posts from the database'
+        next(e)
     }
 }
 
-async function getPost(postID) {
+async function getPost(postID, next) {
     try {
         return await Post.findById(postID,
             {
@@ -24,57 +23,52 @@ async function getPost(postID) {
             })
     } catch (e) {
         console.log(e)
-        res.status(500).json({
-            message: 'Error fetching post from the database'
-        })
+        e.message = 'Error fetching post from the database'
+        next(e)
     }
 }
 
-async function createPost(post) {
+async function createPost(post, next) {
     try {
         const newPost = new Post(post)
         await newPost.save()
         console.log('Saved')
     } catch (e) {
         console.log(e)
-        res.status(500).json({
-            message: 'Error creating post'
-        })
+        e.message = 'Error creating post'
+        next(e)
     }
 }
 
-async function updatePost(postId, post) {
+async function updatePost(postId, post, next) {
     try {
         await Post.findByIdAndUpdate(postId, post)
         console.log('Updated')
     } catch (e) {
         console.log(e)
-        res.status(500).json({
-            message: 'Error updating post'
-        })
+        e.message = 'Error updating post'
+        next(e)    
     }
 }
 
-async function deletePost(postId) {
+async function deletePost(postId, next) {
     try {
         await Post.findByIdAndDelete(postId)
         console.log('Deleted')
     } catch (e) {
         console.log(e)
-        res.status(500).json({
-            message: 'Error deleting post'
-        })
+        e.message = 'Error deleting post'
+        next(e)    
     }
 }
 
-async function postExists(postID) {
+async function postExists(postID, next) {
     try {
         return await Post.findById(postID)
     } catch (e) {
         console.log(e)
-        res.status(500).json({
-            message: 'Error fetching post from the database'
-        })
+        e.message = 'Error fetching post from the database'
+        next(e)    
     }
 }
 

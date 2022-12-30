@@ -1,7 +1,7 @@
 const postModel = require('../models/posts.model')
 
-async function httpGetPosts(req, res){
-    const posts = await postModel.getPosts()
+async function httpGetPosts(req, res, next){
+    const posts = await postModel.getPosts(next)
 
     if(posts.length <= 0){
         return res.status(404).json({
@@ -14,9 +14,9 @@ async function httpGetPosts(req, res){
     })
 }
 
-async function httpGetPost(req, res){
+async function httpGetPost(req, res, next){
     const postId = req.params.postId
-    const post = await postModel.getPost(postId)
+    const post = await postModel.getPost(postId, next)
     
     if(!post){
         return res.status(404).json({
@@ -29,7 +29,7 @@ async function httpGetPost(req, res){
     })
 }
 
-async function httpCreatePost(req, res){
+async function httpCreatePost(req, res, next){
     const post = req.body
 
     if (!post.title || !post.content || !post.author) {
@@ -37,7 +37,7 @@ async function httpCreatePost(req, res){
             message: 'Missing post parameter'
         })
     }
-    await postModel.createPost(post)
+    await postModel.createPost(post, next)
 
     res.status(201).json({
         message: 'Post created successfully',
@@ -45,11 +45,11 @@ async function httpCreatePost(req, res){
     })
 }
 
-async function httpUpdatePost(req, res){
+async function httpUpdatePost(req, res, next){
     const postId = req.params.postId
     const post = req.body
 
-    const exists = await postModel.postExists(postId)
+    const exists = await postModel.postExists(postId, next)
 
     if(!exists){
         return res.status(404).json({
@@ -63,7 +63,7 @@ async function httpUpdatePost(req, res){
         })
     }
 
-    await postModel.updatePost(postId, post)
+    await postModel.updatePost(postId, post, next)
 
     res.status(200).json({
         message: 'Post updated',
@@ -71,10 +71,10 @@ async function httpUpdatePost(req, res){
     })
 }
 
-async function httpDeletePost(req, res){
+async function httpDeletePost(req, res, next){
     const postId = req.params.postId
 
-    const exists = await postModel.postExists(postId)
+    const exists = await postModel.postExists(postId, next)
 
     if(!exists){
         return res.status(404).json({
@@ -82,7 +82,7 @@ async function httpDeletePost(req, res){
         })
     }
 
-    await postModel.deletePost(postId)
+    await postModel.deletePost(postId, next)
 
     res.status(204)
 }
