@@ -2,7 +2,7 @@ const Post = require('../models/posts.mongo')
 
 async function getPosts(){
     try {
-        await Post.find()
+        return await Post.find()
     } catch (e) {
         console.log(e)
         res.status(500).json({
@@ -13,7 +13,7 @@ async function getPosts(){
 
 async function getPost(postID){
     try{
-        await Post.findById(postID)
+        return await Post.findById(postID)
     } catch (e) {
         console.log(e)
         res.status(500).json({
@@ -59,10 +59,22 @@ async function deletePost(postId){
     }
 }
 
+async function postExists(postID){
+    try{
+        return await Post.findById(postID)
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({
+            message: 'Error fetching post from the database'
+        })
+    }
+}
+
 module.exports = {
     getPosts,
     getPost,
     createPost,
     updatePost,
-    deletePost
+    deletePost,
+    postExists
 }

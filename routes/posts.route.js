@@ -4,12 +4,12 @@ const postController = require('../controllers/posts.controller')
 
 const postRouter  = express.Router()
 
-postRouter.get('/', postController.httpGetPosts)
-postRouter.get('/:postId', postController.httpGetPost)
+postRouter.get('/posts', postController.httpGetPosts)
+postRouter.get('/post/:postId', postController.httpGetPost)
 
-postRouter.post('/', postController.httpCreatePost)
-postRouter.patch('/:postId', postController.httpUpdatePost)
+postRouter.post('/post', postController.httpCreatePost)
+postRouter.put('/post/:postId', postController.httpUpdatePost)
 
-postRouter.delete('/', postController.httpDeletePost)
+postRouter.delete('/post/:postId', postController.httpDeletePost)
 
 module.exports = postRouter

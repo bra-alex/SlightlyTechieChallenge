@@ -9,7 +9,7 @@ const PORT = 3000
 
 app.use(express.json())
 
-app.use('/posts', postRouter)
+app.use(postRouter)
 
 async function startServer() {
     await mongoConnect()
