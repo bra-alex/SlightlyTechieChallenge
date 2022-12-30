@@ -3,7 +3,7 @@ const postModel = require('../models/posts.model')
 async function httpGetPosts(req, res){
     const posts = await postModel.getPosts()
 
-    if(!posts){
+    if(posts.length <= 0){
         return res.status(404).json({
             message: 'No posts found'
         })

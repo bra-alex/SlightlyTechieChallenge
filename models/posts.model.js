@@ -1,8 +1,12 @@
 const Post = require('../models/posts.mongo')
 
-async function getPosts(){
+async function getPosts() {
     try {
-        return await Post.find()
+        return await Post.find({},
+            {
+                '_id': 0,
+                '__v': 0
+            })
     } catch (e) {
         console.log(e)
         res.status(500).json({
@@ -11,9 +15,13 @@ async function getPosts(){
     }
 }
 
-async function getPost(postID){
-    try{
-        return await Post.findById(postID)
+async function getPost(postID) {
+    try {
+        return await Post.findById(postID,
+            {
+                '_id': 0,
+                '__v': 0
+            })
     } catch (e) {
         console.log(e)
         res.status(500).json({
@@ -22,7 +30,7 @@ async function getPost(postID){
     }
 }
 
-async function createPost(post){
+async function createPost(post) {
     try {
         const newPost = new Post(post)
         await newPost.save()
@@ -35,7 +43,7 @@ async function createPost(post){
     }
 }
 
-async function updatePost(postId, post){
+async function updatePost(postId, post) {
     try {
         await Post.findByIdAndUpdate(postId, post)
         console.log('Updated')
@@ -47,7 +55,7 @@ async function updatePost(postId, post){
     }
 }
 
-async function deletePost(postId){
+async function deletePost(postId) {
     try {
         await Post.findByIdAndDelete(postId)
         console.log('Deleted')
@@ -59,8 +67,8 @@ async function deletePost(postId){
     }
 }
 
-async function postExists(postID){
-    try{
+async function postExists(postID) {
+    try {
         return await Post.findById(postID)
     } catch (e) {
         console.log(e)
