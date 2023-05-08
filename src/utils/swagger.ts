@@ -18,7 +18,7 @@ const swaggerSpec = swaggerJSDoc(options)
 
 export default function swaggerDocs(app: Express) {
   app.use('/', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
-  app.get('docs.json', (_req: Request, res: Response) => {
+  app.get('/docs.json', (_req: Request, res: Response) => {
     res.setHeader('Content-Type', 'application/json')
     res.send(swaggerSpec)
   })
