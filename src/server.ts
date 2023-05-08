@@ -13,10 +13,6 @@ app.use(express.json())
 
 app.use(postRouter)
 
-app.use('/', (_req: Request, res: Response) => {
-  res.redirect('docs')
-})
-
 app.get('/healthcare', (_req: Request, res: Response) => res.sendStatus(200))
 
 app.listen(3000, async () => {
