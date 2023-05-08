@@ -1,12 +1,11 @@
-FROM --platform=linux/amd64 node:lts-alpine
+FROM node:lts-alpine
+
 WORKDIR /app
-
-COPY package.json ./
-
-RUN npm install --omit=dev
 
 COPY . .
 
-USER node
-CMD ["npm", "start"]
-EXPOSE 3000
+RUN npm install
+
+RUN npm run build
+
+CMD ["node", "build/src/app.js"]
