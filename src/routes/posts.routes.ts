@@ -11,11 +11,11 @@ import {
 const postRouter = express.Router()
 
 postRouter.get('/posts', httpGetPosts)
-postRouter.get('/post/:postId', httpGetPost)
+postRouter.get('/posts/:postId', httpGetPost)
 
-postRouter.post('/post', httpCreatePost)
-postRouter.put('/post/:postId', httpUpdatePost)
+postRouter.post('/posts', httpCreatePost)
+postRouter.put('/posts/:postId', httpUpdatePost)
 
-postRouter.delete('/post/:postId', httpDeletePost)
+postRouter.delete('/posts/:postId', httpDeletePost)
 
 export default postRouter

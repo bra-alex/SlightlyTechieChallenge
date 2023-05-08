@@ -3,6 +3,7 @@ dotenv.config()
 
 import express from 'express'
 
+import swaggerDocs from './utils/swagger'
 import postRouter from './routes/posts.routes'
 import { mongoConnect } from './utils/mongoose'
 
@@ -15,4 +16,5 @@ app.use(postRouter)
 app.listen(3000, async () => {
   await mongoConnect()
   console.log('Connected')
+  swaggerDocs(app)
 })
